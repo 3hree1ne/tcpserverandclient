@@ -1,5 +1,5 @@
 /*
-gcc tcpclient -o tcpclient -pthread
+gcc tcpclient.c -o tcpclient -pthread
 */
 #include <stdio.h>
 #include <sys/types.h>
@@ -15,7 +15,7 @@ gcc tcpclient -o tcpclient -pthread
 
 FILE *Clientlogs;
 int sockfd, clientfd;
-const char *ipnum = "127.0.0.1";
+char *ipnum = "127.0.0.1";  
 
 //threadmain func
 void *threadMain1(void *arg){
@@ -61,10 +61,12 @@ void *threadMain2(void *arg){
 }
 
 //main func
-int main(){
+int main(int argc, char *argv[]){
+	if(argc > 1)
+		ipnum = argv[1];
 	struct sockaddr_in server;
 	int retval, pretval1, pretval2;
-        int port = 54321;
+	int port = 54321;
 	int yes = 1;
 	socklen_t slen = sizeof(server);
 	pthread_t tid1, tid2;
